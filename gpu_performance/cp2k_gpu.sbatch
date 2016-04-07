@@ -75,8 +75,7 @@ module load fftw;
 export CRAY_CUDA_MPS=1;
 EXE="./cp2k.psmp";
 #aprun -n $SLURM_NTASKS -N $SLURM_NTASKS_PER_NODE -d $SLURM_CPUS_PER_TASK $EXE H2O-256.inp > "$out";
-echo "srun -N $SLURM_JOB_NUM_NODES --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK $EXE H2O-256.inp";
-exit
+srun -N $SLURM_JOB_NUM_NODES --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK $EXE H2O-256.inp > "$out";
 
 #========================================
 # check output file
