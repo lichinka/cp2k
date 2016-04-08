@@ -31,8 +31,8 @@ cat > ${SRC_DIR}/arch/${ARCH_NAME}.${ARCH_VERS} <<EOF
 NVCC     = nvcc -D__GNUC_MINOR__=6 -D__GNUC__=4
 CC       = cc
 CPP      =   
-FC       = ftn 
-LD       = ftn 
+FC       = gfortran
+LD       = gfortran
 AR       = ar -r
 CPPFLAGS =
 DFLAGS   = -D__FFTW3 -D__parallel -D__SCALAPACK -D__HAS_smm_dnn -D__ACC -D__DBCSR_ACC -D__PW_CUDA
