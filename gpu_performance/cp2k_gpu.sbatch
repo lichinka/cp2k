@@ -8,7 +8,7 @@
 #
 # Input files:
 #  GTH_BASIS_SETS
-#  H2O-32.inp
+#  H2O-256.inp
 #  POTENTIAL
 # 
 # Output file:
@@ -20,7 +20,7 @@
 # SLURM VARIABLES (APPLICATION SPECIFIC)
 #========================================
 #SBATCH --job-name="cp2k_gpu"
-#SBATCH --time=01:00:00
+#SBATCH --time=00:30:00
 #SBATCH --nodes=8
 #SBATCH --ntasks-per-core=1
 #SBATCH --ntasks-per-node=2
@@ -78,7 +78,7 @@ module load cudatoolkit;
 export CRAY_CUDA_MPS=1;
 EXE="./cp2k.psmp";
 #aprun -n $SLURM_NTASKS -N $SLURM_NTASKS_PER_NODE -d $SLURM_CPUS_PER_TASK $EXE H2O-256.inp > "$out";
-srun -N $SLURM_JOB_NUM_NODES --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK $EXE H2O-32.inp > "$out";
+srun -N $SLURM_JOB_NUM_NODES --ntasks-per-node=$SLURM_NTASKS_PER_NODE -c $SLURM_CPUS_PER_TASK $EXE H2O-256.inp > "$out";
 
 #========================================
 # check output file

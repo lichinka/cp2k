@@ -1,4 +1,0 @@
-{
-"description": "Full Matrices",
-"requires": ["../common", "../base", "../mpiwrap" ]
-}
