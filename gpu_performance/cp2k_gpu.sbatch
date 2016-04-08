@@ -25,6 +25,7 @@
 #SBATCH --ntasks-per-core=1
 #SBATCH --ntasks-per-node=2
 #SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu
 #===================================
 # SETUP (GENERAL)
 #===================================
@@ -72,8 +73,8 @@ echo -e "$SLURM_JOB_NUM_NODES nodes, $SLURM_NTASKS_PER_NODE tasks per node ($SLU
 if [ -z "$( module list 2>&1 | grep PrgEnv-gnu )" ]; then
     module swap PrgEnv-cray PrgEnv-gnu;
 fi
-module load cudatoolkit;
 module load fftw;
+module load cudatoolkit;
 export CRAY_CUDA_MPS=1;
 EXE="./cp2k.psmp";
 #aprun -n $SLURM_NTASKS -N $SLURM_NTASKS_PER_NODE -d $SLURM_CPUS_PER_TASK $EXE H2O-256.inp > "$out";
