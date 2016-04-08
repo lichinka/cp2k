@@ -1,5 +1,0 @@
-# wall-time, performance (day/ns) and % performance difference on 4 nodes, 2 MPI tasks per node
-nid 04-04-2016_16-30-17 17001 	 Job output NOT OK: test FAILED!
-nid 04-04-2016_16-40-32 17002 	 Job output NOT OK: test FAILED!
-nid 04-04-2016_16-42-06 17003 	 Job output NOT OK: test FAILED!
-nid 04-04-2016_17-02-18 17004 	 Job output NOT OK: test FAILED!
