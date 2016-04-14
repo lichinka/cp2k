@@ -7,11 +7,12 @@ RUN  apt-get update                          && \
                         git             \
                         libfftw3-dev    \
                         make            \
-                        subversion
+                        subversion      \
                      --no-install-recommends
 
 WORKDIR /usr/local/src
 
+ADD compile_shifter.sh compile_shifter.sh
 RUN git clone https://github.com/lichinka/cp2k.git && \
     cd cp2k                                        && \
     ./compile_shifter.sh
