@@ -1,13 +1,70 @@
 #!/bin/sh
 
+set -e
+
 SRC_DIR="$( pwd )/cp2k-2.6"
+SMM_LIB="libsmm_dnn_linux.gnu.a"
 
 #
 # checkout the lastest source from the 2.6 branch
 #
-svn checkout http://svn.code.sf.net/p/cp2k/code/branches/cp2k-2_6-branch cp2k-src
-mv cp2k-src/cp2k ${SRC_DIR}
-rm -rf cp2k-src
+if [ ! -d "${SRC_DIR}" ]; then
+	svn checkout http://svn.code.sf.net/p/cp2k/code/branches/cp2k-2_6-branch cp2k-src
+	mv cp2k-src/cp2k ${SRC_DIR}
+	rm -rf cp2k-src
+fi
+
+#
+# build the libsmm - takes a long time
+#
+SMM_CONFIG="config/linux.gnu.custom"
+
+if [ ! -f "${SMM_LIB}" ]; then
+	cd ${SRC_DIR}/tools/build_libsmm
+	#
+	# create a configuration file to build on a single node (i.e. no SLURM)
+	#
+	cat > config/none.wlm <<EOF
+batch_cmd() {
+    \$@;
+}
+EOF
+	#
+	# customize the host compilation
+	#
+	cat > ${SMM_CONFIG} <<EOF
+#
+# target compiler... these are the options used for building the library.
+# They should be aggessive enough to e.g. perform vectorization for the specific CPU (e.g. -ftree-vectorize -march=native),
+# and allow some flexibility in reordering floating point expressions (-ffast-math).
+# Higher level optimisation (in particular loop nest optimization) should not be used.
+#
+target_compile="gfortran -O2 -funroll-loops -ffast-math -ftree-vectorize -march=native -cpp -finline-functions -fopenmp"
+
+#
+# target dgemm link options... these are the options needed to link blas (e.g. -lblas)
+# blas is used as a fall back option for sizes not included in the library or in those cases where it is faster
+# the same blas library should thus also be used when libsmm is linked.
+#
+blas_linking="-lblas"
+
+#
+# host compiler... this is used only to compile a few tools needed to build
+# the library. The library itself is not compiled this way.
+# This compiler needs to be able to deal with some Fortran2003 constructs.
+#
+host_compile="gfortran -O2"
+EOF
+	#
+	# build
+	#
+	./generate clean
+	./generate -c ${SMM_CONFIG} -j 2 -t 8 -w none tiny1
+	./generate -c ${SMM_CONFIG} -j 2 -t 8 -w none small1
+	./generate -c ${SMM_CONFIG} -j 2 -t 8 -w none lib
+	cp lib/${SMM_LIB} ${SRC_DIR}/..
+	cd ${SRC_DIR}/..
+fi
 
 #
 # arch file
@@ -32,7 +89,7 @@ FCFLAGS  = \$(DFLAGS) -fopenmp -mavx -funroll-loops -ffast-math -ftree-vectorize
 LDFLAGS  = \$(FCFLAGS)
 NVFLAGS  = \$(DFLAGS) -arch sm_35
 LIBS     = -lfftw3 -lfftw3_threads -lcudart -lcufft -lcublas -lrt
-LIBS    += ${SRC_DIR}/../libsmm_dnn_cray.gnu.a
+LIBS    += ${SRC_DIR}/../${SMM_LIB}
 EOF
 
 #

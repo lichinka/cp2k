@@ -7,6 +7,7 @@ RUN  apt-get update                          && \
                         git             \
                         libfftw3-dev    \
                         make            \
+			openblas	\
                         subversion      \
                      --no-install-recommends
 
