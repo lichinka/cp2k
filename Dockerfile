@@ -5,6 +5,7 @@ RUN  apt-get update                          && \
      apt-get install -y build-essential \
                         gfortran        \
                         git             \
+                        libatlas-dev    \
                         libfftw3-dev    \
                         make            \
                         subversion      \

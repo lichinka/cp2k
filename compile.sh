@@ -10,7 +10,7 @@ mv cp2k-src/cp2k ${SRC_DIR}
 rm -rf cp2k-src
 
 #
-# module setup for CP2K
+# module setup for CP2K - Santis
 #
 if [ -z "$( module list 2>&1 | grep PrgEnv-gnu )" ]; then
     module switch PrgEnv-cray PrgEnv-gnu
