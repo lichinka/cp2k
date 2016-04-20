@@ -5,6 +5,7 @@ RUN  apt-get update                          && \
      apt-get install -y build-essential \
                         gfortran        \
                         git             \
+                        libatlas-dev    \
                         libfftw3-dev    \
                         make            \
 			openblas	\
@@ -13,7 +14,6 @@ RUN  apt-get update                          && \
 
 WORKDIR /usr/local/src
 
-ADD compile_shifter.sh compile_shifter.sh
 RUN git clone https://github.com/lichinka/cp2k.git && \
     cd cp2k                                        && \
     ./compile_shifter.sh

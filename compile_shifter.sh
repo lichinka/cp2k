@@ -3,7 +3,7 @@
 set -e
 
 SRC_DIR="$( pwd )/cp2k-2.6"
-SMM_LIB="libsmm_dnn_linux.gnu.a"
+SMM_LIB="libsmm_dnn_linux.gnu.custom.a"
 
 #
 # checkout the lastest source from the 2.6 branch
@@ -53,15 +53,18 @@ blas_linking="-lblas"
 # the library. The library itself is not compiled this way.
 # This compiler needs to be able to deal with some Fortran2003 constructs.
 #
-host_compile="gfortran -O2"
+host_compile="gfortran -O2 -std=f2003"
 EOF
 	#
 	# build
 	#
 	./generate clean
-	./generate -c ${SMM_CONFIG} -j 2 -t 8 -w none tiny1
-	./generate -c ${SMM_CONFIG} -j 2 -t 8 -w none small1
-	./generate -c ${SMM_CONFIG} -j 2 -t 8 -w none lib
+	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none tiny1
+	./generate -c ${SMM_CONFIG} tiny2
+	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none small1
+	./generate -c ${SMM_CONFIG} small2
+	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none lib
+	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none check1
 	cp lib/${SMM_LIB} ${SRC_DIR}/..
 	cd ${SRC_DIR}/..
 fi
