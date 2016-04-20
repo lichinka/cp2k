@@ -8,7 +8,6 @@ RUN  apt-get update                          && \
                         libatlas-dev    \
                         libfftw3-dev    \
                         make            \
-			openblas	\
                         subversion      \
                      --no-install-recommends
 
