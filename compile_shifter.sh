@@ -59,12 +59,12 @@ EOF
 	# build
 	#
 	./generate clean
-	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none tiny1
+	./generate -c ${SMM_CONFIG} -j 2 -t 16 -w none tiny1
 	./generate -c ${SMM_CONFIG} tiny2
-	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none small1
+	./generate -c ${SMM_CONFIG} -j 2 -t 16 -w none small1
 	./generate -c ${SMM_CONFIG} small2
-	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none lib
-	./generate -c ${SMM_CONFIG} -j 2 -t 4 -w none check1
+	./generate -c ${SMM_CONFIG} -j 2 -t 16 -w none lib
+	./generate -c ${SMM_CONFIG} -j 2 -t 16 -w none check1
 	cp lib/${SMM_LIB} ${SRC_DIR}/..
 	cd ${SRC_DIR}/..
 fi
