@@ -11,7 +11,6 @@ SMM_LIB="libsmm_dnn_linux.gnu.custom.a"
 if [ ! -d "${SRC_DIR}" ]; then
 	svn checkout http://svn.code.sf.net/p/cp2k/code/branches/cp2k-2_6-branch cp2k-src
 	mv cp2k-src/cp2k ${SRC_DIR}
-	rm -rf cp2k-src
 fi
 
 #
@@ -51,9 +50,9 @@ blas_linking="-lblas"
 #
 # host compiler... this is used only to compile a few tools needed to build
 # the library. The library itself is not compiled this way.
-# This compiler needs to be able to deal with some Fortran2003 constructs.
+# This compiler needs to be able to deal with some Fortran2008 constructs.
 #
-host_compile="gfortran -O2 -std=f2003"
+host_compile="gfortran -O2 -std=f2008"
 EOF
 	#
 	# build
