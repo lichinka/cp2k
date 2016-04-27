@@ -14,6 +14,26 @@ if [ ! -d "${SRC_DIR}" ]; then
 fi
 
 #
+# module setup
+#
+case $( hostname ) in
+    *greina*)
+        MODS="cuda70/toolkit/7.0.28 cuda70/blas/7.0.28 cuda70/fft/7.0.28"
+        ;;
+    *)
+	MODS=""
+        echo "WARNING: not loading modules."
+        ;;
+esac
+echo "Checking modules on $( hostname ) ..."
+for m in ${MODS}; do
+    if [ -z "$( echo ${LOADEDMODULES} | grep ${m} )" ]; then
+        echo -e "Missing <${m}>"
+        exit 1
+    fi
+done
+
+#
 # build the libsmm - takes a long time
 #
 SMM_CONFIG="config/linux.gnu.custom"
