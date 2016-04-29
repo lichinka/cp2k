@@ -11,6 +11,7 @@ SMM_LIB="libsmm_dnn_linux.gnu.custom.a"
 if [ ! -d "${SRC_DIR}" ]; then
 	svn checkout http://svn.code.sf.net/p/cp2k/code/branches/cp2k-2_6-branch cp2k-src
 	mv cp2k-src/cp2k ${SRC_DIR}
+	rm -rf cp2k-src
 fi
 
 #
@@ -84,6 +85,7 @@ EOF
 	./generate -c ${SMM_CONFIG} small2
 	./generate -c ${SMM_CONFIG} -j 2 -t 16 -w none lib
 	./generate -c ${SMM_CONFIG} -j 2 -t 16 -w none check1
+	./generate clean
 	cp lib/${SMM_LIB} ${SRC_DIR}/..
 	cd ${SRC_DIR}/..
 fi

@@ -32,6 +32,8 @@ RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf   && \
 ENV PATH /usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/cuda/lib:/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 
+RUN rm cuda_7.0.run
+
 
 ##########################
 ## CP2K section
@@ -50,5 +52,6 @@ RUN  apt-get update                          && \
 RUN git clone https://github.com/lichinka/cp2k.git && \
     cd cp2k                                        && \
     ./compile_shifter.sh
+
 
 CMD ["/bin/bash"]
