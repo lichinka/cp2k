@@ -21,6 +21,11 @@ RUN wget -q -O cuda_7.0.run http://developer.download.nvidia.com/compute/cuda/7_
     chmod +x cuda_7.0.run                         && \
     ./cuda_7.0.run --silent --toolkit --override
 
+RUN wget -q http://developer.download.nvidia.com/compute/cuda/7_0/Prod/cufft_update/cufft_patch_linux.tar.gz  && \
+    cd /usr/local/cuda                                                        && \
+    tar zxvf /usr/local/src/cufft_patch_linux.tar.gz --keep-directory-symlink && \
+    cd /usr/local/src
+
 RUN echo "/usr/local/cuda/lib" >> /etc/ld.so.conf.d/cuda.conf   && \
     echo "/usr/local/cuda/lib64" >> /etc/ld.so.conf.d/cuda.conf && \
     ldconfig
@@ -32,7 +37,7 @@ RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf   && \
 ENV PATH /usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/cuda/lib:/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 
-RUN rm cuda_7.0.run
+RUN rm cuda_7.0.run cufft_patch_linux.tar.gz
 
 
 ##########################
