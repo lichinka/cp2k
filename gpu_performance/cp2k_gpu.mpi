@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+mpiexec --n 2 --num-cores 2 cp2k.psmp H2O-32.inp > cp2k_mpi.out
