@@ -21,15 +21,17 @@ RUN wget -q -O cuda_7.0.run http://developer.download.nvidia.com/compute/cuda/7_
     chmod +x cuda_7.0.run                         && \
     ./cuda_7.0.run --silent --toolkit --override
 
-RUN echo "/usr/local/cuda/lib" >> /etc/ld.so.conf.d/cuda.conf && \
+RUN echo "/usr/local/cuda/lib" >> /etc/ld.so.conf.d/cuda.conf   && \
     echo "/usr/local/cuda/lib64" >> /etc/ld.so.conf.d/cuda.conf && \
     ldconfig
 
-RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
-    echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf
+RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf   && \
+    echo "/usr/local/nvidia/lib64" >> /etc/ld.so.conf.d/nvidia.conf && \
+    ldconfig
 
 ENV PATH /usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib:/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
+
 
 ##########################
 ## CP2K section
@@ -39,6 +41,7 @@ RUN  apt-get update                          && \
                         git             	\
                         libatlas-dev    	\
                         libfftw3-dev    	\
+			liblapack-dev           \
 			libmpich-dev    	\
 			libscalapack-mpi-dev 	\
                         subversion      	\

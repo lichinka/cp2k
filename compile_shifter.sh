@@ -110,7 +110,7 @@ CFLAGS   = \$(DFLAGS) -fopenmp -fno-omit-frame-pointer -O3 -ffast-math
 FCFLAGS  = \$(DFLAGS) -fopenmp -mavx -funroll-loops -ffast-math -ftree-vectorize -ffree-form -ffree-line-length-512 -fno-omit-frame-pointer -std=f2003 -fimplicit-none -Werror=aliasing -Werror=ampersand -Werror=c-binding-type -Werror=intrinsic-shadow -Werror=intrinsics-std -Werror=line-truncation -Werror=tabs -Werror=realloc-lhs-all -Werror=target-lifetime -Werror=underflow -Werror=unused-but-set-variable -Werror=unused-variable -Werror=conversion -Wno-use-no-only -Wzerotrip
 LDFLAGS  = \$(FCFLAGS)
 NVFLAGS  = \$(DFLAGS) -arch sm_35
-LIBS     = -lfftw3 -lfftw3_threads -lcudart -lcufft -lcublas -lrt
+LIBS     = -lfftw3 -lfftw3_threads -lblacs-openmpi -lblas -llapack -lscalapack-openmpi -L/usr/local/cuda/lib64 -lcudart -lcufft -lcublas -lrt
 LIBS    += ${SRC_DIR}/../${SMM_LIB}
 EOF
 
