@@ -46,6 +46,7 @@ RUN  apt-get update                          && \
 			liblapack-dev           \
 			libmpich-dev    	\
 			libscalapack-mpi-dev 	\
+			ssh                     \
                         subversion      	\
                      --no-install-recommends
 
