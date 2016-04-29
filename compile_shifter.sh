@@ -100,9 +100,9 @@ cat > ${SRC_DIR}/arch/${ARCH_NAME}.${ARCH_VERS} <<EOF
 #
 NVCC     = nvcc -D__GNUC_MINOR__=6 -D__GNUC__=4
 CC       = gcc
-CPP      = g++ 
-FC       = gfortran 
-LD       = gfortran
+CPP      = 
+FC       = mpif90
+LD       = mpif90
 AR       = ar -r
 CPPFLAGS =
 DFLAGS   = -D__FFTW3 -D__parallel -D__SCALAPACK -D__HAS_smm_dnn -D__ACC -D__DBCSR_ACC -D__PW_CUDA
