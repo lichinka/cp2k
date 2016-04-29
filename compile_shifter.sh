@@ -120,5 +120,6 @@ EOF
 # compile
 #
 cd ${SRC_DIR}/makefiles
-make -j 4 ARCH=${ARCH_NAME} VERSION=${ARCH_VERS} && \
-echo "You may find the executables in <${SRC_DIR}/exe>"
+make -j 4 ARCH=${ARCH_NAME} VERSION=${ARCH_VERS}        && \
+echo "You may find the executables in <${SRC_DIR}/exe>" && \
+cp ../exe/${ARCH_NAME}/cp2k.${ARCH_VERS} ${SRC_DIR}/../gpu_performance/
