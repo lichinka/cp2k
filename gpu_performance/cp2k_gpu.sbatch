@@ -22,9 +22,8 @@
 #SBATCH --job-name="cp2k_gpu"
 #SBATCH --time=00:30:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-core=1
-#SBATCH --ntasks-per-node=2
-#SBATCH --cpus-per-task=2
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=1
 #SBATCH --gres=gpu
 #===================================
 # SETUP (GENERAL)
