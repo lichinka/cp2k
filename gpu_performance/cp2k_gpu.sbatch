@@ -73,7 +73,9 @@ if [ -z "$( module list 2>&1 | grep PrgEnv-gnu )" ]; then
     module swap PrgEnv-cray PrgEnv-gnu;
 fi
 module load fftw;
-module load cudatoolkit;
+module load cudatoolkit/7.0.28-1.0502.10742.5.1
+module list
+
 export CRAY_CUDA_MPS=1;
 EXE="./cp2k.psmp";
 #aprun -n $SLURM_NTASKS -N $SLURM_NTASKS_PER_NODE -d $SLURM_CPUS_PER_TASK $EXE H2O-32.inp > "$out";

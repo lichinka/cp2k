@@ -2,22 +2,20 @@
 
 set -e
 
-#
-# number of GPUs with compute_capability >=3.5
-#
-NGPUS=1
+##
+## start an MPS server instance for one GPU
+##
+#export CUDA_VISIBLE_DEVICES=0
+#nvidia-smi -i 0 -c EXCLUSIVE_PROCESS
+#nvidia-cuda-mps-control -d
 
 #
-# start an MPS server instance for each GPU
+# check the CUDA MPS environment is set up
 #
-for ((i=0; i< ${NGPUS}; i++)); do
-    export CUDA_VISIBLE_DEVICES=${i}
-    export CUDA_MPS_PIPE_DIRECTORY=/tmp/mps_${i}
-    export CUDA_MPS_LOG_DIRECTORY=/tmp/mps_log_${i}
-    mkdir -p ${CUDA_MPS_PIPE_DIRECTORY}
-    mkdir -p ${CUDA_MPS_LOG_DIRECTORY}
-    nvidia-cuda-mps-control -d
-done
+if [ -z "$( nvidia-smi -q -d compute | grep -i 'compute mode' | grep -i 'Exclusive_Process' )" ]; then
+    echo "No GPU found in EXCLUSIVE_PROCESS mode. Exiting."
+    exit 1
+fi
 
 #
 # launch the application
