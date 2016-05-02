@@ -1,12 +1,12 @@
 #!/bin/sh
 
-SRC_DIR="$( pwd )/cp2k-2.6"
+SRC_DIR="$( pwd )/cp2k-trunk"
 
 if [ ! -d "${SRC_DIR}" ]; then
     #
-    # checkout the latest source from the 2.6 branch
+    # checkout the latest source from trunk
     #
-    svn checkout http://svn.code.sf.net/p/cp2k/code/branches/cp2k-2_6-branch cp2k-src
+    svn checkout http://svn.code.sf.net/p/cp2k/code/trunk cp2k-src
     mv cp2k-src/cp2k ${SRC_DIR}
     rm -rf cp2k-src
 fi
@@ -28,7 +28,7 @@ module load cray-libsci
 LIBINT_DIR=${SRC_DIR}/tools/hfx_tools/libint_tools
 
 if [ ! -f "${LIBINT_DIR}/lib/libint.a" ]; then
-    cd ${LIBINT_DIR}/tools/hfx_tools/libint_tools
+    cd ${LIBINT_DIR}
     wget http://sourceforge.net/projects/libint/files/v1-releases/libint-1.1.4.tar.gz/download
     tar xvzf libint-1.1.4.tar.gz
     cd libint-1.1.4
@@ -36,6 +36,9 @@ if [ ! -f "${LIBINT_DIR}/lib/libint.a" ]; then
     make clean
     make -j 4
     make install
+    cd ..
+    rm -rf libint-1.1.4 libint-1.1.4.tar.gz
+    cd ${SRC_DIR}
 fi
 LIBINT_DIR=${LIBINT_DIR}/lib
 echo "Using LibInt binary at <${LIBINT_DIR}> ..."
